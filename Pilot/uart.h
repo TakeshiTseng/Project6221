@@ -13,9 +13,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-int uartOpen();
-void uartWriteByte(int uart_id, uint8_t data);
-uint8_t uartReadByte(int uart_id);
-int uartAvailable(int uart_fd);
-void uartClose(int uart_id);
+int uart_open();
+void uart_write_byte(int uart_id, uint8_t data);
+uint8_t uart_read_byte(int uart_id);
+int uart_available(int uart_fd);
+void uart_close(int uart_id);
 #endif

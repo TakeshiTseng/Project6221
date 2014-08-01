@@ -1,4 +1,4 @@
-int uartOpen() {
+int uart_open() {
     const char* device = "/dev/ttyACM0";
     int buad = 9600;
 
@@ -27,12 +27,12 @@ int uartOpen() {
         case 115200:	myBaud = B115200 ; break ;
         case 230400:	myBaud = B230400 ; break ;
 
-        default:
-                        return -2 ;
+        default:    return -2 ;
     }
 
-    if ((fd = open (device, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK)) == -1)
-        return -1 ;
+    if ((fd = open (device, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK)) == -1) {
+        return -1 ;        
+    }
 
     fcntl (fd, F_SETFL, O_RDWR) ;
 
@@ -69,29 +69,31 @@ int uartOpen() {
     return fd ;
 }
 
-void uartWriteByte(const int uartId, uint8_t data) {
+void uart_write_byte(const int uartId, uint8_t data) {
     write (fd, &data, 1) ;
     tcflush (uartId, TCIOFLUSH) ;
 }
 
-uint8_t uartReadByte(const int uartId) {
+uint8_t uart_read_byte(const int uartId) {
     uint8_t data ;
 
-    if (read (fd, &data, 1) != 1)
-        return -1 ;
+    if (read (fd, &data, 1) != 1) {
+        return -1 ;        
+    }
 
     return ((int)data) & 0xFF ;
 }
 
-int uartAvailable(const int uartId) {
+int uart_available(const int uartId) {
     int res ;
 
-    if (ioctl (fd, FIONREAD, &result) == -1)
-        return -1 ;
+    if (ioctl (fd, FIONREAD, &result) == -1) {
+        return -1 ;        
+    }
 
     return res ;
 }
 
-void uartClose(int uartId) {
+void uart_close(int uartId) {
     close(uartId);
 }
